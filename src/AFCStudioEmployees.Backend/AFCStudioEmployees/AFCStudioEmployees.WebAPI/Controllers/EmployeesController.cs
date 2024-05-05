@@ -25,4 +25,6 @@ public class EmployeesController
     [HttpGet]
     public async Task<Result<IEnumerable<EmployeePresentationDTO>>> GetAllEmployees()
         => await _mediator.Send(new GetAllEmployeesPresentationsQuery());
+    
+    
 }

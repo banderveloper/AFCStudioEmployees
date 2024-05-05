@@ -34,7 +34,7 @@ public class GetAllEmployeesPresentationsQueryHandler : IRequestHandler<GetAllEm
                 EmployeeSalary = employee.Job.Salary,
                 EmployeeInviteTime = employee.CreatedAt
             }).ToListAsync(cancellationToken);
-
+        
         return Result<IEnumerable<EmployeePresentationDTO>>.Success(result);
     }
 }
