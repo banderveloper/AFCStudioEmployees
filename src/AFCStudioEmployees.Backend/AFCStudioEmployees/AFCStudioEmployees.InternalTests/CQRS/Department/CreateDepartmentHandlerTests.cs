@@ -55,6 +55,26 @@ public class CreateDepartmentHandlerTests : BaseTest
         Assert.False(createdDepartmentResult.Succeed);
         Assert.Equal(createdDepartmentResult.ErrorCode, ErrorCode.DepartmentAlreadyExists);
     }
+    
+    /// <summary>
+    /// Failing creating of department with existing name, got in the uppercase
+    /// </summary>
+    [Fact]
+    public async Task CreateDepartmentHandler_FailOnExistingNameInUpperCase()
+    {
+        // Assert
+        var handler = new CreateDepartmentCommandHandler(Context);
+
+        // Act
+        var createdDepartmentResult = await handler.Handle(new CreateDepartmentCommand
+        {
+            DepartmentName = ApplicationContextFactory.FirstDepartment.Name.ToUpper()
+        }, CancellationToken.None);
+
+        // Assert
+        Assert.False(createdDepartmentResult.Succeed);
+        Assert.Equal(createdDepartmentResult.ErrorCode, ErrorCode.DepartmentAlreadyExists);
+    }
 
     /// <summary>
     /// Failing creating of department with empty name
