@@ -42,7 +42,7 @@ public class CreateDepartmentCommandHandlerTests : BaseTest
     [Fact]
     public async Task FailOnExistingName()
     {
-        // Assert
+        // Arrange
         var handler = new CreateDepartmentCommandHandler(Context);
 
         // Act
@@ -62,7 +62,7 @@ public class CreateDepartmentCommandHandlerTests : BaseTest
     [Fact]
     public async Task FailOnExistingNameInUpperCase()
     {
-        // Assert
+        // Arrange
         var handler = new CreateDepartmentCommandHandler(Context);
 
         // Act
@@ -82,7 +82,7 @@ public class CreateDepartmentCommandHandlerTests : BaseTest
     [Fact]
     public async Task FailOnEmptyDepartmentName()
     {
-        // Assert
+        // Arrange
         var handler = new CreateDepartmentCommandHandler(Context);
         
         // Act

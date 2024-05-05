@@ -17,10 +17,10 @@ public class CreateJobCommandHandlerTests : BaseTest
     [Fact]
     public async Task Success()
     {
-        // Act
+        // Arrange
         var handler = new CreateJobCommandHandler(Context);
 
-        // Arrange
+        // Act
         var createdJobResult = await handler.Handle(new CreateJobCommand { JobName = "New job", Salary = 15632 },
             CancellationToken.None);
 
@@ -40,10 +40,10 @@ public class CreateJobCommandHandlerTests : BaseTest
     [Fact]
     public async Task FailOnExistingName()
     {
-        // Act
+        // Arrange
         var handler = new CreateJobCommandHandler(Context);
 
-        // Arrange
+        // Act
         var createdJobResult = await handler.Handle(
             new CreateJobCommand { JobName = ApplicationContextFactory.FirstJob.Name, Salary = 15632 },
             CancellationToken.None);
@@ -59,10 +59,10 @@ public class CreateJobCommandHandlerTests : BaseTest
     [Fact]
     public async Task FailOnNegativeSalary()
     {
-        // Act
+        // Arrange
         var handler = new CreateJobCommandHandler(Context);
 
-        // Arrange
+        // Act
         var createdJobResult = await handler.Handle(
             new CreateJobCommand { JobName = "Unique name", Salary = -500 },
             CancellationToken.None);
@@ -78,10 +78,10 @@ public class CreateJobCommandHandlerTests : BaseTest
     [Fact]
     public async Task FailOnEmptyJobName()
     {
-        // Act
+        // Arrange
         var handler = new CreateJobCommandHandler(Context);
 
-        // Arrange
+        // Act
         var createdJobResult = await handler.Handle(
             new CreateJobCommand { JobName = "", Salary = 5000 },
             CancellationToken.None);

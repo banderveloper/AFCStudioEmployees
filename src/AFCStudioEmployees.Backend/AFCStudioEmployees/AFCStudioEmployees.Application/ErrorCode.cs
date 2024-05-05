@@ -11,8 +11,10 @@ public enum ErrorCode
     
     DepartmentAlreadyExists,
     DepartmentNameEmpty,
+    DepartmentNotFound,
     
     JobAlreadyExists,
     JobNameEmpty,
     JobSalaryLessThanZero,
+    JobNotFound,
 }
