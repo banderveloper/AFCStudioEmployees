@@ -10,6 +10,7 @@ public class CreateEmployeeCommand : IRequest<Result<Employee>>
     public string LastName { get; set; }
     public string FirstName { get; set; }
     public string? MiddleName { get; set; }
+    public DateTime BirthDate { get; set; }
 
     public long JobId { get; set; }
     public long DepartmentId { get; set; }
@@ -29,19 +30,20 @@ public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeComman
             .FirstOrDefaultAsync(d => d.Id == request.DepartmentId, cancellationToken);
         if (existingDepartment is null)
             return Result<Employee>.Error(ErrorCode.DepartmentNotFound);
-        
+
         // Check job existing
         var existingJob = await _context.Jobs
             .FirstOrDefaultAsync(j => j.Id == request.JobId, cancellationToken);
         if (existingJob is null)
             return Result<Employee>.Error(ErrorCode.JobNotFound);
-        
+
         // if ok - create
         var newEmployee = new Employee
         {
             LastName = request.LastName,
             FirstName = request.FirstName,
             MiddleName = request.MiddleName,
+            Birthdate = request.BirthDate,
 
             DepartmentId = request.DepartmentId,
             JobId = request.JobId
