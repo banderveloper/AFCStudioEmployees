@@ -58,6 +58,8 @@ public class ApplicationContextFactory
 
         context.SaveChanges();
         
+        context.ChangeTracker.Clear();
+        
         return context;
     }
 

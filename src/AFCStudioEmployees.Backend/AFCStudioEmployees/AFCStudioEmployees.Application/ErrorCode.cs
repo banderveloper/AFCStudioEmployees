@@ -17,4 +17,6 @@ public enum ErrorCode
     JobNameEmpty,
     JobSalaryLessThanZero,
     JobNotFound,
+    
+    EmployeeNotFound
 }
