@@ -21,13 +21,22 @@ public class ApplicationContextFactory
 
     // Test employees
     public static Employee FirstEmployee = new()
-        { Id = 50, LastName = "First", FirstName = "First", MiddleName = "First", JobId = 1, DepartmentId = 1 };
+    {
+        Id = 50, LastName = "First", FirstName = "First", MiddleName = "First", JobId = FirstJob.Id, DepartmentId = FirstDepartment.Id,
+        Birthdate = DateTime.UtcNow
+    };
 
     public static Employee SecondEmployee = new()
-        { Id = 51, LastName = "Second", FirstName = "Second", MiddleName = "Second", JobId = 2, DepartmentId = 1 };
+    {
+        Id = 51, LastName = "Second", FirstName = "Second", MiddleName = "Second", JobId = SecondJob.Id, DepartmentId = FirstDepartment.Id,
+        Birthdate = DateTime.UtcNow
+    };
 
     public static Employee ThirdEmployee = new Employee
-        { Id = 52, LastName = "Third", FirstName = "Third", MiddleName = "Third", JobId = 1, DepartmentId = 2 };
+    {
+        Id = 52, LastName = "Third", FirstName = "Third", MiddleName = "Third", JobId = FirstJob.Id, DepartmentId = SecondDepartment.Id,
+        Birthdate = DateTime.UtcNow
+    };
 
     /// <summary>
     /// Create configurated and filled database context
@@ -57,9 +66,9 @@ public class ApplicationContextFactory
         context.Employees.AddRange(FirstEmployee, SecondEmployee, ThirdEmployee);
 
         context.SaveChanges();
-        
+
         context.ChangeTracker.Clear();
-        
+
         return context;
     }
 
