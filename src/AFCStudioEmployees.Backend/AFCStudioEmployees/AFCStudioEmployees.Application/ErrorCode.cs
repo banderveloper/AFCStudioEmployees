@@ -7,5 +7,7 @@ namespace AFCStudioEmployees.Application;
 [JsonConverter(typeof(SnakeCaseStringEnumConverter<ErrorCode>))]
 public enum ErrorCode
 {
-    Unknown
+    Unknown,
+    
+    DepartmentAlreadyExists
 }
