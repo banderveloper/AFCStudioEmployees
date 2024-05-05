@@ -1,15 +1,15 @@
 ﻿using AFCStudioEmployees.Application;
 using AFCStudioEmployees.Application.CQRS.Commands;
-using AFCStudioEmployees.Tests.Common;
+using AFCStudioEmployees.InternalTests.Common;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
-namespace AFCStudioEmployees.Tests.CQRS;
+namespace AFCStudioEmployees.InternalTests.CQRS.Department;
 
 /// <summary>
 /// Unit tests for CQRS commands/queries of department entity
 /// </summary>
-public class DepartmentTests : BaseTest
+public class CreateDepartmentHandlerTests : BaseTest
 {
     /// <summary>
     /// Successfull creating of unexisting department
@@ -48,7 +48,7 @@ public class DepartmentTests : BaseTest
         // Act
         var createdDepartmentResult = await handler.Handle(new CreateDepartmentCommand
         {
-            DepartmentName = ApplicationContextFactory.FirstDepartmentName
+            DepartmentName = ApplicationContextFactory.FirstDepartment.Name
         }, CancellationToken.None);
 
         // Assert

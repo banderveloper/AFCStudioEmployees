@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFCStudioEmployees.Persiste
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFCStudioEmployees.WebAPI", "AFCStudioEmployees.WebAPI\AFCStudioEmployees.WebAPI.csproj", "{AA657B1C-1D35-4CE4-ABB6-0610265F158C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFCStudioEmployees.Tests", "AFCStudioEmployees.Tests\AFCStudioEmployees.Tests.csproj", "{B4F86046-A4B5-4F26-9A81-B035A9C01F5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFCStudioEmployees.InternalTests", "AFCStudioEmployees.InternalTests\AFCStudioEmployees.InternalTests.csproj", "{B4F86046-A4B5-4F26-9A81-B035A9C01F5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

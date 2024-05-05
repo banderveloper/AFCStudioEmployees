@@ -1,7 +1,6 @@
 ﻿using AFCStudioEmployees.Persistence;
-using Microsoft.Extensions.Logging;
 
-namespace AFCStudioEmployees.Tests.Common;
+namespace AFCStudioEmployees.InternalTests.Common;
 
 // Base class for all test classes
 public class BaseTest : IDisposable

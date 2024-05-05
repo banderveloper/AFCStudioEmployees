@@ -2,22 +2,32 @@
 using AFCStudioEmployees.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace AFCStudioEmployees.Tests.Common;
+namespace AFCStudioEmployees.InternalTests.Common;
 
 /// <summary>
 /// Entity framework DB context factory with initialized entities
 /// </summary>
 public class ApplicationContextFactory
 {
-    // Test names of departments
-    public static string FirstDepartmentName = "First";
-    public static string SecondDepartmentName = "Second";
-    public static string ThirdDepartmentName = "Third";
+    // Test departments
+    public static Department FirstDepartment = new() { Id = 50, Name = "First" };
+    public static Department SecondDepartment = new() { Id = 51, Name = "Second" };
+    public static Department ThirdDepartment = new() { Id = 52, Name = "Third" };
 
     // Test jobs
     public static Job FirstJob = new() { Id = 50, Name = "Manager", Salary = 16000 };
     public static Job SecondJob = new() { Id = 51, Name = "Cleaner", Salary = 12000 };
     public static Job ThirdJob = new() { Id = 52, Name = "Director", Salary = 54000 };
+
+    // Test employees
+    public static Employee FirstEmployee = new()
+        { Id = 50, LastName = "First", FirstName = "First", MiddleName = "First", JobId = 1, DepartmentId = 1 };
+
+    public static Employee SecondEmployee = new()
+        { Id = 51, LastName = "Second", FirstName = "Second", MiddleName = "Second", JobId = 2, DepartmentId = 1 };
+
+    public static Employee ThirdEmployee = new Employee
+        { Id = 52, LastName = "Third", FirstName = "Third", MiddleName = "Third", JobId = 1, DepartmentId = 2 };
 
     /// <summary>
     /// Create configurated and filled database context
@@ -38,46 +48,16 @@ public class ApplicationContextFactory
         context.Database.EnsureCreated();
 
         // Fill database with departments
-        context.Departments.AddRange(
-            new Department { Id = 50, Name = FirstDepartmentName },
-            new Department { Id = 51, Name = SecondDepartmentName },
-            new Department { Id = 52, Name = ThirdDepartmentName }
-        );
+        context.Departments.AddRange(FirstDepartment, SecondDepartment, ThirdDepartment);
 
         // Fill database with jobs
         context.Jobs.AddRange(FirstJob, SecondJob, ThirdJob);
 
         // Fill database with employees
-        context.Employees.AddRange(
-            new Employee
-            {
-                Id = 50,
-                LastName = "First",
-                FirstName = "First",
-                MiddleName = "First",
-                JobId = 1,
-                DepartmentId = 1
-            },
-            new Employee
-            {
-                Id = 51,
-                LastName = "Second",
-                FirstName = "Second",
-                MiddleName = "Second",
-                JobId = 2,
-                DepartmentId = 1
-            },
-            new Employee
-            {
-                Id = 52,
-                LastName = "Third",
-                FirstName = "Third",
-                MiddleName = "Third",
-                JobId = 1,
-                DepartmentId = 2
-            });
+        context.Employees.AddRange(FirstEmployee, SecondEmployee, ThirdEmployee);
 
         context.SaveChanges();
+        
         return context;
     }
 
