@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AFCStudioEmployees.Application\AFCStudioEmployees.Application.csproj" />
+      <ProjectReference Include="..\AFCStudioEmployees.Domain\AFCStudioEmployees.Domain.csproj" />
+    </ItemGroup>
+
 </Project>

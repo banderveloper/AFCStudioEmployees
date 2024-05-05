@@ -7,4 +7,10 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AFCStudioEmployees.Application\AFCStudioEmployees.Application.csproj" />
+      <ProjectReference Include="..\AFCStudioEmployees.Domain\AFCStudioEmployees.Domain.csproj" />
+      <ProjectReference Include="..\AFCStudioEmployees.Persistence\AFCStudioEmployees.Persistence.csproj" />
+    </ItemGroup>
+
 </Project>

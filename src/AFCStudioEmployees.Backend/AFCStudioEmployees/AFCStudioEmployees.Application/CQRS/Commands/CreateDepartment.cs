@@ -19,6 +19,10 @@ public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCo
 
     public async Task<Result<Department>> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
     {
+        // error if new department name is empty
+        if (string.IsNullOrWhiteSpace(request.DepartmentName))
+            return Result<Department>.Error(ErrorCode.DepartmentNameEmpty);
+
         // set department name to lowercase for searching
         var searchDepartmentName = request.DepartmentName.ToLower();
 

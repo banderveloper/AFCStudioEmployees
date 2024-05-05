@@ -9,5 +9,6 @@ public enum ErrorCode
 {
     Unknown,
     
-    DepartmentAlreadyExists
+    DepartmentAlreadyExists,
+    DepartmentNameEmpty
 }
