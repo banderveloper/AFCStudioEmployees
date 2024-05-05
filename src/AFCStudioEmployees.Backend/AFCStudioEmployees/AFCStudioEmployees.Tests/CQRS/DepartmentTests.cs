@@ -36,6 +36,9 @@ public class DepartmentTests : BaseTest
             CancellationToken.None));
     }
     
+    /// <summary>
+    /// Failing creating of department with existing name
+    /// </summary>
     [Fact]
     public async Task CreateDepartmentHandler_FailOnExistingName()
     {
@@ -53,6 +56,9 @@ public class DepartmentTests : BaseTest
         Assert.Equal(createdDepartmentResult.ErrorCode, ErrorCode.DepartmentAlreadyExists);
     }
 
+    /// <summary>
+    /// Failing creating of department with empty name
+    /// </summary>
     [Fact]
     public async Task CreateDepartmentHandler_FailOnEmptyDepartmentName()
     {
