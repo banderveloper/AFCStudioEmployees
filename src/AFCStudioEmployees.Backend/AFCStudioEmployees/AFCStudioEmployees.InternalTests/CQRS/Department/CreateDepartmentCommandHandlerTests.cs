@@ -7,15 +7,15 @@ using Xunit;
 namespace AFCStudioEmployees.InternalTests.CQRS.Department;
 
 /// <summary>
-/// Unit tests for CQRS commands/queries of department entity
+/// Unit tests for create department command handler
 /// </summary>
-public class CreateDepartmentHandlerTests : BaseTest
+public class CreateDepartmentCommandHandlerTests : BaseTest
 {
     /// <summary>
     /// Successfull creating of unexisting department
     /// </summary>
     [Fact]
-    public async Task CreateDepartmentHandler_Success()
+    public async Task Success()
     {
         // Arrange
         var handler = new CreateDepartmentCommandHandler(Context);
@@ -40,7 +40,7 @@ public class CreateDepartmentHandlerTests : BaseTest
     /// Failing creating of department with existing name
     /// </summary>
     [Fact]
-    public async Task CreateDepartmentHandler_FailOnExistingName()
+    public async Task FailOnExistingName()
     {
         // Assert
         var handler = new CreateDepartmentCommandHandler(Context);
@@ -60,7 +60,7 @@ public class CreateDepartmentHandlerTests : BaseTest
     /// Failing creating of department with existing name, got in the uppercase
     /// </summary>
     [Fact]
-    public async Task CreateDepartmentHandler_FailOnExistingNameInUpperCase()
+    public async Task FailOnExistingNameInUpperCase()
     {
         // Assert
         var handler = new CreateDepartmentCommandHandler(Context);
@@ -80,7 +80,7 @@ public class CreateDepartmentHandlerTests : BaseTest
     /// Failing creating of department with empty name
     /// </summary>
     [Fact]
-    public async Task CreateDepartmentHandler_FailOnEmptyDepartmentName()
+    public async Task FailOnEmptyDepartmentName()
     {
         // Assert
         var handler = new CreateDepartmentCommandHandler(Context);

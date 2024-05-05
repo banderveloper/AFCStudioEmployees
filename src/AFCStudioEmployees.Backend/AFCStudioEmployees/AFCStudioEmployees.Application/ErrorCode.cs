@@ -10,5 +10,9 @@ public enum ErrorCode
     Unknown,
     
     DepartmentAlreadyExists,
-    DepartmentNameEmpty
+    DepartmentNameEmpty,
+    
+    JobAlreadyExists,
+    JobNameEmpty,
+    JobSalaryLessThanZero,
 }

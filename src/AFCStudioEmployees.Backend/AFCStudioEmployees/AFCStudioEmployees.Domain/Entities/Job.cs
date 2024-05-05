@@ -8,7 +8,7 @@ namespace AFCStudioEmployees.Domain.Entities;
 public class Job : BaseEntity
 {
     public string Name { get; set; }
-    public double Salary { get; set; }
+    public decimal Salary { get; set; }
     
     [JsonIgnore]
     public IEnumerable<Employee> Employees { get; set; }
