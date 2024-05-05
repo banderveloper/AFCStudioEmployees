@@ -43,7 +43,8 @@ var app = builder.Build();
 
 app.UseCors("AllowAll");
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/time", () => DateTime.UtcNow);
+app.MapControllerRoute(name: "default", pattern: "{controller}/{action}");
 
 Console.WriteLine("Server started");
 app.Run();
