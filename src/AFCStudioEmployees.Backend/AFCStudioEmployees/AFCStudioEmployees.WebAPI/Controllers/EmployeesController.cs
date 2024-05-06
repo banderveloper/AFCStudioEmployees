@@ -35,7 +35,8 @@ public class EmployeesController
     /// <param name="request">Request parameters with filter, order and pagination info</param>
     /// <returns>Result with list of employees</returns>
     [HttpGet]
-    public async Task<Result<IEnumerable<EmployeePresentationDTO>>> GetEmployees([FromQuery] GetEmployeesRequest request)
+    public async Task<Result<IEnumerable<EmployeePresentationDTO>>> GetEmployees(
+        [FromQuery] GetEmployeesRequest request)
     {
         var query = new GetEmployeesPresentationsQuery
         {
@@ -68,4 +69,35 @@ public class EmployeesController
 
         return await _mediator.Send(command);
     }
+
+    /// <summary>
+    /// Update employee info
+    /// </summary>
+    /// <param name="request">Request with updating employee data</param>
+    /// <returns>Result with updated employee</returns>
+    [HttpPut]
+    public async Task<Result<Employee>> UpdateEmployee([FromBody] UpdateEmployeeRequest request)
+    {
+        var command = new UpdateEmployeeCommand
+        {
+            LastName = request.LastName,
+            FirstName = request.FirstName,
+            MiddleName = request.MiddleName,
+            BirthDate = request.BirthDate,
+            DepartmentId = request.DepartmentId,
+            JobId = request.JobId,
+            EmployeeId = request.EmployeeId
+        };
+
+        return await _mediator.Send(command);
+    }
+
+    /// <summary>
+    /// Delete employee by id
+    /// </summary>
+    /// <param name="employeeId">Id of employee to delete</param>
+    /// <returns>Result</returns>
+    [HttpDelete("{employeeId:long}")]
+    public async Task<Result<None>> DeleteEmployee(long employeeId)
+        => await _mediator.Send(new DeleteEmployeeCommand { EmployeeId = employeeId });
 }
