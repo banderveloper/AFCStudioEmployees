@@ -2,6 +2,12 @@
 WORKDIR /app
 EXPOSE 80
 
+ARG POSTGRES_DB_USERNAME
+ARG POSTGRES_DB_PASSWORD
+
+ENV Database__Username=$POSTGRES_DB_USERNAME
+ENV Database__Password=$POSTGRES_DB_PASSWORD
+
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["AFCStudioEmployees.Domain/AFCStudioEmployees.Domain.csproj", "AFCStudioEmployees.Domain/AFCStudioEmployees.Domain.csproj"]
