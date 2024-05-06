@@ -41,7 +41,7 @@ public class EmployeesController
         var query = new GetEmployeesPresentationsQuery
         {
             PageSize = request.Size,
-            PageIndex = request.Page,
+            PageIndex = request.Page-1,
             SearchTerm = request.Search,
             SortProperty = request.SortBy
         };

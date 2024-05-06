@@ -8,7 +8,6 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.AddCustomConfiguration();
 
 // Inject other layers
@@ -16,7 +15,6 @@ builder.Services
     .AddApplication()
     .AddPersistence(builder.Environment.EnvironmentName.ToLower());
 
-var scope = builder.Services.BuildServiceProvider().CreateScope();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -37,6 +35,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 });
 
 // Initialize database if it is not exists
+var scope = builder.Services.BuildServiceProvider().CreateScope();
 var applicationDbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
 DatabaseInitializer.Initialize(applicationDbContext);
 
