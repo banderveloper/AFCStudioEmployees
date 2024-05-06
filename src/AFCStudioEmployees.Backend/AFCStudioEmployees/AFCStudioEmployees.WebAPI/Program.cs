@@ -2,6 +2,7 @@ using AFCStudioEmployees.Application;
 using AFCStudioEmployees.Application.Converters;
 using AFCStudioEmployees.Persistence;
 using AFCStudioEmployees.WebAPI;
+using AFCStudioEmployees.WebAPI.Middleware;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
@@ -41,6 +42,7 @@ DatabaseInitializer.Initialize(applicationDbContext);
 
 var app = builder.Build();
 
+app.UseCustomExceptionHandler();
 app.UseCors("AllowAll");
 
 app.MapGet("/time", () => DateTime.UtcNow);
