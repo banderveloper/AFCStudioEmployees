@@ -8,6 +8,7 @@ namespace AFCStudioEmployees.Application;
 public enum ErrorCode
 {
     Unknown,
+    InvalidModel,
     
     DepartmentAlreadyExists,
     DepartmentNameEmpty,
