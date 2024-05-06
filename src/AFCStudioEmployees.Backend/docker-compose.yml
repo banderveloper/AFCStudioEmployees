@@ -1,0 +1,38 @@
+version: '3'
+services:
+  
+  postgres:
+    container_name: postgres
+    build:
+      context: Postgres
+      dockerfile: Dockerfile
+      args:
+        - POSTGRES_DB_USERNAME=arg_value
+        - POSTGRES_DB_PASSWORD=arg_value
+    hostname: afcstudioemployees.postgres
+    image: postgres
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    
+
+  afcstudioemployees:
+    container_name: afcstudioemployees
+    build:
+      context: AFCStudioEmployees
+      dockerfile: Dockerfile
+      args:
+        - POSTGRES_DB_USERNAME=arg_value
+        - POSTGRES_DB_PASSWORD=arg_value
+    image: banderveloper/afcstudioemployees
+    hostname: afcstudioemployees
+    ports:
+      - 5000:80
+    environment:
+      - ASPNETCORE_ENVIRONMENT=DockerDevelopment
+    depends_on:
+      - postgres
+    restart: on-failure
+  
+volumes:
+  db_data:
