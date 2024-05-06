@@ -18,5 +18,8 @@ public enum ErrorCode
     JobSalaryLessThanZero,
     JobNotFound,
     
-    EmployeeNotFound
+    EmployeeNotFound,
+    
+    InvalidPagination,
+    PropertyNameNotFound
 }

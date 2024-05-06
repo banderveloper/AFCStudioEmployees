@@ -1,16 +1,27 @@
-﻿namespace AFCStudioEmployees.Application.Extensions;
+﻿using System.Linq.Expressions;
+
+namespace AFCStudioEmployees.Application.Extensions;
 
 public static class QueryableExtensions
 {
     // Extension method to sort entities by property name using reflection
-    public static IQueryable<T> OrderByProperty<T>(this IQueryable<T> query, string propertyName)
+    public static IQueryable<T> OrderByProperty<T>(this IQueryable<T> source, string propertyName, bool ascending = true)
     {
-        var entityType = typeof(T);
-        var propertyInfo = entityType.GetProperty(propertyName);
+        var parameter = Expression.Parameter(typeof(T), "x");
+        var property = Expression.Property(parameter, propertyName);
+        var lambda = Expression.Lambda(property, parameter);
 
-        if (propertyInfo is null)
-            throw new ArgumentException($"Property {propertyName} not found on type {entityType.Name}");
+        var methodName = ascending ? "OrderBy" : "OrderByDescending";
+        var types = new Type[] { source.ElementType, property.Type };
 
-        return query.OrderBy(e => propertyInfo.GetValue(e, null));
+        var methodCall = Expression.Call(
+            typeof(Queryable),
+            methodName,
+            types,
+            source.Expression,
+            Expression.Quote(lambda)
+        );
+
+        return source.Provider.CreateQuery<T>(methodCall);
     }
 }
