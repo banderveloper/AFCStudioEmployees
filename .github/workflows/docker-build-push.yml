@@ -13,7 +13,7 @@ env:
   POSTGRES_DB_USERNAME: ${{ secrets.POSTGRES_DB_USERNAME }}
 
 jobs:
-  build:
+  build-push:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -25,10 +25,13 @@ jobs:
           username: ${{ env.DOCKER_USERNAME }}
           password: ${{ env.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker Compose
+      - name: Build container
         run: |
           docker-compose -f ${{ env.COMPOSE_FILE }} build --build-arg POSTGRES_DB_PASSWORD=${{ env.POSTGRES_DB_PASSWORD }} --build-arg POSTGRES_DB_USERNAME=${{ env.POSTGRES_DB_USERNAME }} 
-          docker-compose -f ${{ env.COMPOSE_FILE }} push
+
+      - name: Push container
+        run: |
+          docker-compose -f ${{ env.COMPOSE_FILE }} push ${{ env.DOCKER_HUB_REPO }}
 
       - name: Clean up
         run: |
