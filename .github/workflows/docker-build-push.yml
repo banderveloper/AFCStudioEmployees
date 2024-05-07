@@ -31,7 +31,7 @@ jobs:
 
       - name: Push container
         run: |
-          docker-compose -f ${{ env.COMPOSE_FILE }} push ${{ env.DOCKER_HUB_REPO }}
+          docker-compose -f ${{ env.COMPOSE_FILE }} push ${{ env.DOCKER_HUB_REPO }} afcstudioemployees
 
       - name: Clean up
         run: |
