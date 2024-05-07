@@ -1,4 +1,6 @@
-﻿namespace AFCStudioEmployees.Persistence;
+﻿using Serilog;
+
+namespace AFCStudioEmployees.Persistence;
 
 // Invokes in main during server starting
 public static class DatabaseInitializer
@@ -10,5 +12,6 @@ public static class DatabaseInitializer
     public static void Initialize(ApplicationDbContext context)
     {
         context.Database.EnsureCreated();
+        Log.Information("Ensured database creating");
     }
 }

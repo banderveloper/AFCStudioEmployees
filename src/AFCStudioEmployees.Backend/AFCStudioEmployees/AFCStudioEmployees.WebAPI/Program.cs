@@ -6,15 +6,32 @@ using AFCStudioEmployees.Persistence;
 using AFCStudioEmployees.WebAPI;
 using AFCStudioEmployees.WebAPI.Middleware;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using Serilog.Events;
 using static System.String;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
 
-var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.UseUrls("http://*:80");
+// Logger
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .WriteTo.Console()
+    .WriteTo.File("logs.log")
+    .CreateLogger();
 
-Console.WriteLine("Building server with environment: " + builder.Environment.EnvironmentName);
+var builder = WebApplication.CreateBuilder(args);
+
+// Listening ports (problems with docker without it)
+builder.WebHost.UseUrls("http://*:80", "http://*:5035");
+
+// Remove another logging providers
+builder.Logging.ClearProviders();
+
+// Serilogger
+builder.Services.AddSerilog();
+
+Log.Information($"Starting server with '{builder.Environment.EnvironmentName}' environment...");
 
 builder.AddCustomConfiguration();
 
@@ -86,19 +103,23 @@ var app = builder.Build();
 app.UseCustomExceptionHandler();
 app.UseCors("AllowAll");
 
-// Add Swagger if development mode
+// If development environment
 if (builder.Environment.EnvironmentName is EnvironmentState.Development or EnvironmentState.DockerDevelopment)
 {
+    // Swagger
     app.UseSwagger();
     app.UseSwaggerUI(config =>
     {
         config.RoutePrefix = Empty;
         config.SwaggerEndpoint("swagger/v1/swagger.json", "AFCStudioEmployees");
     });
+
+    // Request logging
+    app.UseSerilogRequestLogging();
 }
 
 app.MapGet("/time", () => DateTime.UtcNow);
 app.MapControllerRoute(name: "default", pattern: "{controller}/{action}");
 
-Console.WriteLine("Server started");
+Log.Information($"Server started on '{app.Environment.EnvironmentName}' environment!");
 app.Run();

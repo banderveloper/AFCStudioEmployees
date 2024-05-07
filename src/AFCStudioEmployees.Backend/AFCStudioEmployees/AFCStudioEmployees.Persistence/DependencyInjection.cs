@@ -1,8 +1,11 @@
 ﻿using AFCStudioEmployees.Application;
 using AFCStudioEmployees.Application.Configurations;
+using AFCStudioEmployees.Application.Exceptions;
 using AFCStudioEmployees.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace AFCStudioEmployees.Persistence;
 
@@ -20,13 +23,18 @@ public static class DependencyInjection
     /// <exception cref="Exception">Throws in case of unknown environment name</exception>
     public static IServiceCollection AddPersistence(this IServiceCollection services, string environmentName)
     {
-        // Get database configurations from configurations
         var scope = services.BuildServiceProvider().CreateScope();
+
+        // Get database configurations from configurations
         var databaseConfiguration = scope.ServiceProvider.GetRequiredService<DatabaseConfiguration>();
 
         // Inject database context
         services.AddDbContext<ApplicationDbContext>(options =>
         {
+            // If it is no appsettings for given environment - don't run server
+            if (string.IsNullOrEmpty(databaseConfiguration.ConnectionStringPattern))
+                throw new LoggedFatalException($"Configuration for environment '{environmentName}' not found!");
+            
             // ConnectionStringPattern looks like ="username={0}, password={1}"
             var filledConnectionString = string.Format(databaseConfiguration.ConnectionStringPattern,
                 databaseConfiguration.Username, databaseConfiguration.Password);
@@ -43,8 +51,7 @@ public static class DependencyInjection
                     options.UseNpgsql(filledConnectionString);
                     break;
                 default:
-                    // temp
-                    throw new Exception($"Unknown environment name '{environmentName}'");
+                    throw new LoggedFatalException($"Unknown environment '{environmentName}'");
             }
 
             // No ef caching, increases EF perfomance
