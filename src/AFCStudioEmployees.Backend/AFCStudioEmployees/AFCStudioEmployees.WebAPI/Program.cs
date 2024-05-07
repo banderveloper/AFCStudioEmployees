@@ -12,6 +12,10 @@ AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseUrls("http://*:80");
+
+Console.WriteLine("Building server with environment: " + builder.Environment.EnvironmentName);
+
 builder.AddCustomConfiguration();
 
 // Inject other layers
