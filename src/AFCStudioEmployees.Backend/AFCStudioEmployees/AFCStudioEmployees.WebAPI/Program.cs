@@ -1,3 +1,4 @@
+using System.Reflection;
 using AFCStudioEmployees.Application;
 using AFCStudioEmployees.Application.Converters;
 using AFCStudioEmployees.Application.Extensions;
@@ -5,6 +6,7 @@ using AFCStudioEmployees.Persistence;
 using AFCStudioEmployees.WebAPI;
 using AFCStudioEmployees.WebAPI.Middleware;
 using Microsoft.AspNetCore.Mvc;
+using static System.String;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
@@ -15,8 +17,7 @@ builder.AddCustomConfiguration();
 // Inject other layers
 builder.Services
     .AddApplication()
-    .AddPersistence(builder.Environment.EnvironmentName.ToLower());
-
+    .AddPersistence(builder.Environment.EnvironmentName);
 
 // CORS
 builder.Services.AddCors(options =>
@@ -62,6 +63,15 @@ builder.Services
         };
     });
 
+// Swagger
+builder.Services.AddSwaggerGen(config =>
+{
+    // xml comments
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    config.IncludeXmlComments(xmlPath);
+});
+
 // Initialize database if it is not exists
 var scope = builder.Services.BuildServiceProvider().CreateScope();
 var applicationDbContext = scope.ServiceProvider.GetService<ApplicationDbContext>();
@@ -71,6 +81,17 @@ var app = builder.Build();
 
 app.UseCustomExceptionHandler();
 app.UseCors("AllowAll");
+
+// Add Swagger if development mode
+if (builder.Environment.EnvironmentName is EnvironmentState.Development or EnvironmentState.DockerDevelopment)
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(config =>
+    {
+        config.RoutePrefix = Empty;
+        config.SwaggerEndpoint("swagger/v1/swagger.json", "AFCStudioEmployees");
+    });
+}
 
 app.MapGet("/time", () => DateTime.UtcNow);
 app.MapControllerRoute(name: "default", pattern: "{controller}/{action}");
