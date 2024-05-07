@@ -27,7 +27,7 @@ services:
     image: banderveloper/afcstudioemployees
     hostname: afcstudioemployees
     ports:
-      - 5000:80
+      - 5035:80
     environment:
       - ASPNETCORE_ENVIRONMENT=DockerDevelopment
     depends_on:

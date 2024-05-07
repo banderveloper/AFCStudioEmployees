@@ -11,26 +11,35 @@ namespace AFCStudioEmployees.WebAPI.Controllers;
 /// </summary>
 [ApiController]
 [Route("previews")]
+[Produces("application/json")]
 public class PreviewsController : ControllerBase
 {
     private readonly IMediator _mediator;
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="mediator">Mediator instance from DI</param>
     public PreviewsController(IMediator mediator)
         => _mediator = mediator;
     
     /// <summary>
-    /// Get all departments (id+name)
+    /// Get all departments
     /// </summary>
-    /// <returns>Result with list of departments dto</returns>
+    /// <returns>List of departments previews</returns>
+    /// <response code="200">Success</response>
     [HttpGet("departments")]
+    [ProducesResponseType(typeof(Result<IEnumerable<DepartmentPreviewDTO>>), StatusCodes.Status200OK)]
     public async Task<Result<IEnumerable<DepartmentPreviewDTO>>> GetAllDepartmentsPreviews()
         => await _mediator.Send(new GetAllDepartmentsPreviewsQuery());
 
     /// <summary>
-    /// Get all jobs (id+name)
+    /// Get all jobs
     /// </summary>
-    /// <returns>Result with list of jobs dto</returns>
+    /// <returns>List of jobs previews</returns>
+    /// <response code="200">Success</response>
     [HttpGet("jobs")]
+    [ProducesResponseType(typeof(Result<IEnumerable<JobPreviewDTO>>), StatusCodes.Status200OK)]
     public async Task<Result<IEnumerable<JobPreviewDTO>>> GetAllJobsPreviews()
         => await _mediator.Send(new GetAllJobsPreviewsQuery());
 }
