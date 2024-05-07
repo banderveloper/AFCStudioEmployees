@@ -1,4 +1,5 @@
-﻿using AFCStudioEmployees.Application.Configurations;
+﻿using AFCStudioEmployees.Application;
+using AFCStudioEmployees.Application.Configurations;
 using AFCStudioEmployees.Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,26 +32,26 @@ public static class DependencyInjection
                 databaseConfiguration.Username, databaseConfiguration.Password);
 
             // If development env - use sqlite, if more serious - docker containered postgres
-            switch (environmentName.ToLower())
+            switch (environmentName)
             {
-                case "development":
+                case EnvironmentState.Development:
                     options.UseSqlite(filledConnectionString);
                     break;
-                case "dockerdevelopment":
-                case "preproduction":
-                case "production":
+                case EnvironmentState.DockerDevelopment:
+                case EnvironmentState.Preproduction:
+                case EnvironmentState.Production:
                     options.UseNpgsql(filledConnectionString);
                     break;
                 default:
                     // temp
-                    throw new Exception("Unknown environment name");
+                    throw new Exception($"Unknown environment name '{environmentName}'");
             }
 
             // No ef caching, increases EF perfomance
             // in Update ef quieries required to use .AsTracking() for working
             options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         });
-        
+
         // Bind interface and earlier injected app db context
         services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetRequiredService<ApplicationDbContext>());
