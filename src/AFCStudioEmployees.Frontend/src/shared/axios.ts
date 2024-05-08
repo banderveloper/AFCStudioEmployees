@@ -20,10 +20,13 @@ api.interceptors.response.use(response => {
     console.log(response);
 
     return response;
-}, async error => {
+},
+    async error => {
 
     console.error('[INTERCEPTOR] RESPONSE ERROR');
     console.error(error);
 
     return error;
 });
+
+export default api;
