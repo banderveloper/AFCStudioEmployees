@@ -1,7 +1,7 @@
 import NavBar from "./components/NavBar/NavBar.tsx";
 import {Route, Routes} from "react-router-dom";
-import AboutPage from "./pages/AboutPage.tsx";
-import EmployeesPage from "./pages/EmployeesPage.tsx";
+import AboutPage from "./pages/AboutPage/AboutPage.tsx";
+import EmployeesPage from "./pages/EmployeesPage/EmployeesPage.tsx";
 
 export default function App() {
 
