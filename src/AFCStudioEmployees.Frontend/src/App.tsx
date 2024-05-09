@@ -1,24 +1,17 @@
-import {usePreviewsStore} from "./stores/usePreviewsStore.ts";
-import {useEffect} from "react";
+import NavBar from "./components/NavBar/NavBar.tsx";
+import {Route, Routes} from "react-router-dom";
+import AboutPage from "./pages/AboutPage.tsx";
+import EmployeesPage from "./pages/EmployeesPage.tsx";
 
 export default function App() {
 
-    const {departmentsPreviews, getDepartmentsPreviews} = usePreviewsStore();
-
-    useEffect(() => {
-        getDepartmentsPreviews()
-    }, []);
-
-    useEffect(() => {
-
-        console.log('DEPARTMENTS PREVIEWS CHANGED');
-        console.log(departmentsPreviews)
-
-    }, [departmentsPreviews])
-
     return (
-        <div>
-            <h1>Hello world</h1>
-        </div>
+        <>
+            <NavBar/>
+            <Routes>
+                <Route path='/' element={<AboutPage/>}/>
+                <Route path='/employees' element={<EmployeesPage/>}/>
+            </Routes>
+        </>
     )
 }
