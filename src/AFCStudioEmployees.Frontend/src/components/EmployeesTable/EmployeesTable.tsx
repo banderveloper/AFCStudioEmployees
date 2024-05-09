@@ -6,9 +6,9 @@ import EmployeeTableRow from "../EmployeeTableRow/EmployeeTableRow.tsx";
 
 export default function EmployeesTable() {
 
-    const [searchText, setSearchText] = useState<string>();
+    const [searchText, setSearchText] = useState<string>('');
     const [page] = useState<number>(1);
-    const [sortBy] = useState<string>('EmployeeId');
+    const [sortBy, setSortBy] = useState<string>('EmployeeId');
 
     const previewsStore = usePreviewsStore();
     const employeesStore = useEmployeesStore();
@@ -24,10 +24,13 @@ export default function EmployeesTable() {
     useEffect(() => {
 
         previewsStore.getDepartmentsPreviews();
-        employeesStore.getEmployees({page: page, search: '', sortBy: sortBy, size: 10});
+        doSearch()
 
     }, []);
 
+    useEffect(() => {
+        doSearch()
+    }, [sortBy, page])
 
     return (
         <>
@@ -41,14 +44,14 @@ export default function EmployeesTable() {
             <table className={classes.employeesTable}>
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Last name</th>
-                    <th>First name</th>
-                    <th>Middle name</th>
-                    <th>Birth date</th>
-                    <th>Invite time</th>
-                    <th>Salary</th>
-                    <th>Department</th>
+                    <th onClick={() => setSortBy('EmployeeId')}>Id</th>
+                    <th onClick={() => setSortBy('LastName')}>Last name</th>
+                    <th onClick={() => setSortBy('FirstName')}>First name</th>
+                    <th onClick={() => setSortBy('MiddleName')}>Middle name</th>
+                    <th onClick={() => setSortBy('BirthDate')}>Birth date</th>
+                    <th onClick={() => setSortBy('EmployeeInviteTime')}>Invite time</th>
+                    <th onClick={() => setSortBy('EmployeeSalary')}>Salary</th>
+                    <th onClick={() => setSortBy('DepartmentId')}>Department</th>
                 </tr>
                 </thead>
 
@@ -56,10 +59,11 @@ export default function EmployeesTable() {
                 {
                     employeesStore.isLoading || previewsStore.isLoading
                         ?
-                        <h1>Loading</h1>
+                        <tr><td>Loading</td></tr>
                         :
                         employeesStore.employees.map(employee => (
                             <EmployeeTableRow
+                                key={employee.employeeId}
                                 employeeId={employee.employeeId}
                                 lastName={employee.lastName}
                                 firstName={employee.firstName}
