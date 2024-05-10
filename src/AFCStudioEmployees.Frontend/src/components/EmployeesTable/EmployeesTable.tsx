@@ -35,10 +35,10 @@ export default function EmployeesTable() {
     return (
         <>
             <div className={classes.searchBlock}>
-                <label htmlFor='searchInput'>Search: </label>
+                <label htmlFor='searchInput' className={classes.searchLabel}>Search: </label>
                 <input type="text" className={classes.searchInput} id='searchInput' value={searchText}
                        onChange={e => setSearchText(e.target.value)}/>
-                <button onClick={doSearch}>Go</button>
+                <button className={classes.searchButton} onClick={doSearch}>Go</button>
             </div>
 
             <table className={classes.employeesTable}>

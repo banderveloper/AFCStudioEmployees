@@ -1,3 +1,43 @@
 .searchBlock {
     display: flex;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+.searchLabel{
+    margin-right: 10px;
+}
+.searchInput {
+    margin-right: 5px;
+    min-width: 300px;
+}
+.searchButton{
+    padding: 0 15px;
+    font-size: 18px;
+}
+
+.employeeTable {
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    width: 150px;
+    min-width: min-content;
+}
+
+th{
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+tr:hover, th:hover {
+    background-color: #ddd;
+}
+th:hover{
+    cursor: pointer;
 }
