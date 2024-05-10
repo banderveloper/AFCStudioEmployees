@@ -22,10 +22,6 @@ export default function EmployeesTable() {
         employeesStore.getEmployees({page: page, search: searchText ? searchText : '', sortBy: sortBy, size: 10});
     }
 
-    function deleteEmployee(employeeId: number): void {
-        employeesStore.deleteEmployee(employeeId)
-    }
-
     useEffect(() => {
 
         previewsStore.getDepartmentsPreviews();
@@ -77,7 +73,7 @@ export default function EmployeesTable() {
                             employeeInviteTime={employee.employeeInviteTime}
                             employeeSalary={employee.employeeSalary}
                             departmentName={getDepartmentNameById(employee.departmentId)}
-                            deleteEmployee={deleteEmployee}
+                            deleteEmployee={employeesStore.deleteEmployee}
                         />
                     ))
                 }
