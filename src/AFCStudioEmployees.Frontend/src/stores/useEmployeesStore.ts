@@ -59,6 +59,12 @@ export const useEmployeesStore = create<IEmployeesStore>((set) => ({
 
         const response = await api.delete<IServerResponsePayload<void>>(ENDPOINTS.EMPLOYEES + `/${employeeId}`);
 
+        if (response.data.succeed) {
+            set(state => ({
+                employees: state.employees.filter(e => e.employeeId != employeeId)
+            }));
+        }
+
         set({errorCode: response.data.errorCode});
         set({isLoading: false});
     }

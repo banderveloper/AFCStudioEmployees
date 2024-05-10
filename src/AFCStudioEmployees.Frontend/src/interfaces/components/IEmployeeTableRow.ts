@@ -7,4 +7,6 @@ export default interface IEmployeeTableRow{
     employeeInviteTime: string;
     employeeSalary: number;
     departmentName: string;
+
+    deleteEmployee: (employeeId: number) => void;
 }

@@ -21,6 +21,10 @@ export default function EmployeesTable() {
         employeesStore.getEmployees({page: page, search: searchText ? searchText : '', sortBy: sortBy, size: 10});
     }
 
+    function deleteEmployee(employeeId: number): void {
+        employeesStore.deleteEmployee(employeeId)
+    }
+
     useEffect(() => {
 
         previewsStore.getDepartmentsPreviews();
@@ -52,6 +56,7 @@ export default function EmployeesTable() {
                     <th onClick={() => setSortBy('EmployeeInviteTime')}>Invite time</th>
                     <th onClick={() => setSortBy('EmployeeSalary')}>Salary</th>
                     <th onClick={() => setSortBy('DepartmentId')}>Department</th>
+                    <th></th>
                 </tr>
                 </thead>
 
@@ -71,7 +76,9 @@ export default function EmployeesTable() {
                                 birthDate={employee.birthDate}
                                 employeeInviteTime={employee.employeeInviteTime}
                                 employeeSalary={employee.employeeSalary}
-                                departmentName={getDepartmentNameById(employee.departmentId)}/>
+                                departmentName={getDepartmentNameById(employee.departmentId)}
+                                deleteEmployee={deleteEmployee}
+                            />
                         ))
                 }
                 </tbody>
