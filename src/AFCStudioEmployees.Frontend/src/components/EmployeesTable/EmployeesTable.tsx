@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {usePreviewsStore} from "../../stores/usePreviewsStore.ts";
 import {useEmployeesStore} from "../../stores/useEmployeesStore.ts";
 import EmployeeTableRow from "../EmployeeTableRow/EmployeeTableRow.tsx";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.tsx";
 
 export default function EmployeesTable() {
 
@@ -36,6 +37,9 @@ export default function EmployeesTable() {
         doSearch()
     }, [sortBy, page])
 
+    if (previewsStore.isLoading || employeesStore.isLoading)
+        return <LoadingSpinner/>
+
     return (
         <>
             <div className={classes.searchBlock}>
@@ -62,24 +66,20 @@ export default function EmployeesTable() {
 
                 <tbody>
                 {
-                    employeesStore.isLoading || previewsStore.isLoading
-                        ?
-                        <tr><td>Loading</td></tr>
-                        :
-                        employeesStore.employees.map(employee => (
-                            <EmployeeTableRow
-                                key={employee.employeeId}
-                                employeeId={employee.employeeId}
-                                lastName={employee.lastName}
-                                firstName={employee.firstName}
-                                middleName={employee.middleName}
-                                birthDate={employee.birthDate}
-                                employeeInviteTime={employee.employeeInviteTime}
-                                employeeSalary={employee.employeeSalary}
-                                departmentName={getDepartmentNameById(employee.departmentId)}
-                                deleteEmployee={deleteEmployee}
-                            />
-                        ))
+                    employeesStore.employees.map(employee => (
+                        <EmployeeTableRow
+                            key={employee.employeeId}
+                            employeeId={employee.employeeId}
+                            lastName={employee.lastName}
+                            firstName={employee.firstName}
+                            middleName={employee.middleName}
+                            birthDate={employee.birthDate}
+                            employeeInviteTime={employee.employeeInviteTime}
+                            employeeSalary={employee.employeeSalary}
+                            departmentName={getDepartmentNameById(employee.departmentId)}
+                            deleteEmployee={deleteEmployee}
+                        />
+                    ))
                 }
                 </tbody>
 
