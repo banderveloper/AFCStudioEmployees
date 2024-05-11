@@ -53,7 +53,7 @@ public class EmployeesController
         var query = new GetEmployeesPresentationsQuery
         {
             PageSize = request.Size,
-            PageIndex = request.Page-1,
+            PageIndex = request.Page - 1,
             SearchTerm = request.Search,
             SortProperty = request.SortBy
         };
@@ -125,4 +125,16 @@ public class EmployeesController
     [ProducesResponseType(typeof(Result<None>), StatusCodes.Status200OK)]
     public async Task<Result<None>> DeleteEmployee(long employeeId)
         => await _mediator.Send(new DeleteEmployeeCommand { EmployeeId = employeeId });
+
+    /// <summary>
+    /// Get employees pages count by employees per page
+    /// </summary>
+    /// <remarks>Error codes: invalid_pagination (employees per page less than 1)</remarks>
+    /// <param name="employeesPerPage">Employees per page</param>
+    /// <returns>Count of pages</returns>
+    /// <response code="200">Valid request and expected server response, possibly with error code</response>
+    [HttpGet("{employeesPerPage:int}")]
+    [ProducesResponseType(typeof(Result<int>), StatusCodes.Status200OK)]
+    public async Task<Result<int>> GetEmployeesPagesCount(int employeesPerPage)
+        => await _mediator.Send(new GetEmployeesPagesCountQuery { EmployeesPerPage = employeesPerPage });
 }
