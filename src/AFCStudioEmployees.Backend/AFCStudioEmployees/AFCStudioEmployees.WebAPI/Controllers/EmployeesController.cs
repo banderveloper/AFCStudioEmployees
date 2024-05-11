@@ -133,7 +133,7 @@ public class EmployeesController
     /// <param name="employeesPerPage">Employees per page</param>
     /// <returns>Count of pages</returns>
     /// <response code="200">Valid request and expected server response, possibly with error code</response>
-    [HttpGet("{employeesPerPage:int}")]
+    [HttpGet("pages/{employeesPerPage:int}")]
     [ProducesResponseType(typeof(Result<int>), StatusCodes.Status200OK)]
     public async Task<Result<int>> GetEmployeesPagesCount(int employeesPerPage)
         => await _mediator.Send(new GetEmployeesPagesCountQuery { EmployeesPerPage = employeesPerPage });

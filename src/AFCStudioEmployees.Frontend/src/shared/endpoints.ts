@@ -6,5 +6,6 @@ export const ENDPOINTS = {
     PREVIEWS: {
         DEPARTMENTS: `${API_URL}/previews/departments`,
         JOBS: `${API_URL}/previews/jobs`,
-    }
+    },
+    EMPLOYEES_PAGES: `${API_URL}/employees/pages`
 };

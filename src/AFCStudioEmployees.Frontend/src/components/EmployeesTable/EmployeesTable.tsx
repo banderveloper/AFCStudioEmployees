@@ -8,8 +8,9 @@ import LoadingSpinner from "../LoadingSpinner/LoadingSpinner.tsx";
 export default function EmployeesTable() {
 
     const [searchText, setSearchText] = useState<string>('');
-    const [page] = useState<number>(1);
+    const [page, setPage] = useState<number>(1);
     const [sortBy, setSortBy] = useState<string>('EmployeeId');
+    const [employeesPerPage] = useState<number>(3);
 
     const previewsStore = usePreviewsStore();
     const employeesStore = useEmployeesStore();
@@ -19,12 +20,18 @@ export default function EmployeesTable() {
     }
 
     function doSearch(): void {
-        employeesStore.getEmployees({page: page, search: searchText ? searchText : '', sortBy: sortBy, size: 10});
+        employeesStore.getEmployees({
+            page: page,
+            search: searchText ? searchText : '',
+            sortBy: sortBy,
+            size: employeesPerPage
+        });
     }
 
     useEffect(() => {
 
         previewsStore.getDepartmentsPreviews();
+        employeesStore.getPagesCount(employeesPerPage);
 
     }, []);
 
@@ -79,6 +86,14 @@ export default function EmployeesTable() {
                 </tbody>
 
             </table>
+
+            {
+                Array.from(Array(employeesStore.pagesCount).keys()).map(pageNumber => (
+                    <button className={`${classes.paginationButton} ${page == pageNumber+1 ? classes.paginationButtonCurrent : ''}`}
+                            onClick={() => setPage(pageNumber + 1)}>{pageNumber + 1}
+                    </button>
+                ))
+            }
         </>
     )
 

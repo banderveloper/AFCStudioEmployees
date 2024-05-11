@@ -9,9 +9,12 @@ export default interface IEmployeesStore {
     errorCode: string | null;
 
     employees: IEmployee[];
+    pagesCount: number;
 
     getEmployees: (request: IGetEmployeesRequest) => Promise<void>;
     createEmployee: (request: ICreateEmployeeRequest) => Promise<void>;
     updateEmployee: (request: IUpdateEmployeeRequest) => Promise<void>;
     deleteEmployee: (employeeId: number) => Promise<void>;
+
+    getPagesCount: (employeesPerPage: number) => Promise<void>;
 }

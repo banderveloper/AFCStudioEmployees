@@ -11,6 +11,7 @@ export const useEmployeesStore = create<IEmployeesStore>((set) => ({
     errorCode: null,
 
     employees: [],
+    pagesCount: 0,
 
     getEmployees: async (request) => {
 
@@ -63,6 +64,20 @@ export const useEmployeesStore = create<IEmployeesStore>((set) => ({
             set(state => ({
                 employees: state.employees.filter(e => e.employeeId != employeeId)
             }));
+        }
+
+        set({errorCode: response.data.errorCode});
+        set({isLoading: false});
+    },
+
+    getPagesCount: async(employeesPerPage) => {
+
+        set({isLoading: true});
+
+        const response = await api.get<IServerResponsePayload<number>>(ENDPOINTS.EMPLOYEES_PAGES + `/${employeesPerPage}`);
+
+        if(response.data.succeed){
+            set({pagesCount: response.data.data});
         }
 
         set({errorCode: response.data.errorCode});
